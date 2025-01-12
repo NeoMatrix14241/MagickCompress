@@ -6,10 +6,8 @@
 !README.md
 !LICENSE
 
+!magicktesstk-mt.ps1
+!magicktesstk-st.ps1
 !setup/
 !setup/**/*
-!start_process.bat
-!ReadMe.txt
-!compress.ps1
-
-logs/
+!start_processbat
