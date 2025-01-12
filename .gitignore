@@ -1,3 +1,11 @@
+*
+
+!.github/
+!.gitattributes
+!.gitignore
+!README.md
+!LICENSE
+
 !setup/
 !setup/**/*
 !start_process.bat
