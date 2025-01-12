@@ -6,7 +6,7 @@ $logsFolder = Join-Path $baseDir "logs"
 $archiveFolder = Join-Path $baseDir "archive"
 
 # Function to create folder if it doesn't exist
-function Ensure-FolderExists {
+function Test-FolderExists {
     param (
         [string]$FolderPath,
         [string]$FolderName
@@ -19,10 +19,10 @@ function Ensure-FolderExists {
 }
 
 # Create required folders
-Ensure-FolderExists -FolderPath $inputFolder -FolderName "input"
-Ensure-FolderExists -FolderPath $outputFolder -FolderName "output"
-Ensure-FolderExists -FolderPath $logsFolder -FolderName "logs"
-Ensure-FolderExists -FolderPath $archiveFolder -FolderName "archive"
+Test-FolderExists -FolderPath $inputFolder -FolderName "input"
+Test-FolderExists -FolderPath $outputFolder -FolderName "output"
+Test-FolderExists -FolderPath $logsFolder -FolderName "logs"
+Test-FolderExists -FolderPath $archiveFolder -FolderName "archive"
 
 # Start time tracking
 $scriptStartTime = Get-Date
