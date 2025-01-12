@@ -10,6 +10,6 @@ cls
 pwsh.exe -ExecutionPolicy RemoteSigned -File "compress.ps1"
 echo.
 echo.
-echo COMPRESSION OF TIF FILES SUCCESSFUL, CHECK "output" FOLDER FOR EVALUATION
+echo PROCESSES FOR COMPRESSION OF TIF FILES DONE, CHECK "output" FOLDER FOR EVALUATION
 echo.
 pause
