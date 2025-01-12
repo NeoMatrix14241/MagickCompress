@@ -1,6 +1,7 @@
 *
 
 !.github/
+!.github/workflows/
 !.gitattributes
 !.gitignore
 !README.md
