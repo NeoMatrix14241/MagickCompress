@@ -1,0 +1,5 @@
+!setup/
+!setup/**/*
+!start_process.bat
+!ReadMe.txt
+!compress.ps1
