@@ -136,7 +136,8 @@ if ($initialCorruptedFiles.Count -gt 0) {
 Write-Output "Starting compression for valid files..."
 
 $cpuThreads = (Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
-$maxThreads = [Math]::Max(1, [Math]::Floor($cpuThreads * 1.00)) # Using 100% of threads
+# If using 100% CPU Threads: "[Math]::Max(1, [Math]::Floor($cpuThreads * 1.00))"
+$maxThreads = 4
 Write-Log "Detected $cpuThreads CPU threads. Using $maxThreads threads for processing." "Info"
 
 # Create synchronized collections for results
@@ -176,8 +177,9 @@ $imageFiles | ForEach-Object -ThrottleLimit $maxThreads -Parallel {
         $originalSize = (Get-Item $file.FullName).Length
         
         # Process the image
-        $colorspace = & magick identify -format "%[colorspace]" $file.FullName
-        & magick $file.FullName -colorspace $colorspace -quality $quality -compress JPEG $outputFilePath
+        # Quality removed temporarily para sa project na nangangailangan, ibalik nyo na lng pag needed
+        # & magick $file.FullName -colorspace sRGB -compress JPEG $outputFilePath -quality $quality
+        & magick $file.FullName -colorspace sRGB -compress JPEG $outputFilePath
 
         # Post-compression verification steps
         $verificationSteps = @(
@@ -317,19 +319,6 @@ Write-Log "Processed files: $($imageFiles.Count)" "Info"
 Write-Log "Successful: $($successfulFiles.Count)" "Info"
 Write-Log "Failed during processing: $($failedFiles.Count)" "Info"
 Write-Log "Initially corrupted/skipped: $($initialCorruptedFiles.Count)" "Warning"
-
-Write-Log "----------------------------------------" "Info"
-Write-Log "Detailed Processing Results" "Info"
-Write-Log "----------------------------------------" "Info"
-
-Write-Log "Successfully Processed Files:" "Success"
-foreach ($file in $successfulFiles) {
-    $info = $file.Value
-    Write-Log "- $($file.Key)" "Success"
-    Write-Log "  Original: $([math]::Round($info.OriginalSize/1MB, 2))MB" "Info"
-    Write-Log "  Compressed: $([math]::Round($info.NewSize/1MB, 2))MB" "Info"
-    Write-Log "  Reduction: $($info.Savings)%" "Info"
-}
 
 Write-Log "----------------------------------------" "Info"
 Write-Log "Failed Files:" "Error"
